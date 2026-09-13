@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// 全局经营与 WhatsApp 配置。默认毛利底线 15%。
+model AppSetting {
+  id                           String   @id @default("default")
+  companyName                  String   @default("GardenTec / Farm Boxer")
+  productName                  String   @default("FarmBoxer WhatsApp 经营中台")
+  currentSalesRmb              Float    @default(15000000)
+  targetSalesRmb               Float    @default(1000000000)
+  targetYears                  Int      @default(5)
+  marginFloorPercent           Float    @default(15)
+  autoReplyEnabled             Boolean  @default(false)
+  autoReplyConfidenceThreshold Float    @default(0.82)
+  waPhoneNumberId              String   @default("")
+  waAccessToken                String   @default("")
+  waVerifyToken                String   @default("farmboxer-demo-verify")
+  waBusinessAccountId          String   @default("")
+  waAppSecret                  String   @default("")
+  openaiCompatibleBaseUrl      String   @default("https://api.openai.com/v1")
+  updatedAt                    DateTime @updatedAt
+}
+
+model KnowledgeArticle {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  tags      String   @default("")
+  category  String
+  language  String   @default("zh-CN")
+  source    String   @default("manual")
+  isSample  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  sku           String   @unique
+  category      String
+  specsJson     String   @default("{}")
+  listPrice     Float
+  floorPrice    Float
+  cost          Float
+  configsJson   String   @default("[]")
+  targetMarkets String   @default("")
+  solutionTags  String   @default("")
+  isSample      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Contact {
+  id            String         @id @default(cuid())
+  phone         String         @unique
+  name          String         @default("")
+  country       String         @default("")
+  countryCode   String         @default("")
+  needs         String         @default("")
+  tier          String         @default("D")
+  stage         String         @default("new")
+  productNotes  String         @default("")
+  conversations Conversation[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Conversation {
+  id           String   @id @default(cuid())
+  contactId    String
+  contact      Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  waMessageId  String   @default("")
+  direction    String
+  body         String
+  status       String   @default("received")
+  draftReply   String   @default("")
+  confidence   Float?
+  autoSent     Boolean  @default(false)
+  kbIdsJson    String   @default("[]")
+  matchSkuJson String   @default("[]")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([contactId])
+  @@index([status])
+}
+
+model MarketFinding {
+  id               String   @id @default(cuid())
+  country          String
+  localConfigPrefs String   @default("")
+  priceBands       String   @default("")
+  competitors      String   @default("")
+  source           String   @default("adapter:seed")
+  status           String   @default("pending")
+  notes            String   @default("")
+  isSample         Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model ReviewReport {
+  id          String   @id @default(cuid())
+  title       String
+  markdown    String
+  html        String   @default("")
+  periodStart DateTime
+  periodEnd   DateTime
+  isSample    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model JobRun {
+  id        String   @id @default(cuid())
+  type      String
+  status    String
+  summary   String   @default("")
+  createdAt DateTime @default(now())
+}
