@@ -9,8 +9,9 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "db:setup": "tsx scripts/ensure-db.ts",
+    "db:setup": "tsx scripts/ensure-db.ts --force",
     "db:seed": "tsx prisma/seed.ts",
+    "db:fts": "tsx scripts/rebuild-fts.ts",
     "job:market": "tsx scripts/job-market.ts",
     "job:review": "tsx scripts/job-review.ts",
     "postinstall": "prisma generate"

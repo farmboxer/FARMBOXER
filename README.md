@@ -11,9 +11,9 @@ npm install
 npm run dev
 ```
 
-首次 `npm run dev` 会：若缺失则从 `.env.example` 复制 `.env` → `prisma generate` → `prisma db push` → 在空库时写入样本数据。浏览器打开 [http://localhost:3000](http://localhost:3000)。
+首次 `npm run dev` 会：若缺失则从 `.env.example` 复制 `.env` → `prisma generate` → 空库时 `db push` 并写入样本数据 → 重建 FTS。已有 `prisma/dev.db` 时不再交互式 push，以免误删 FTS 表。浏览器打开 [http://localhost:3000](http://localhost:3000)。
 
-单独初始化数据库：
+强制重建库（可接受演示数据丢失）：
 
 ```bash
 cp .env.example .env
