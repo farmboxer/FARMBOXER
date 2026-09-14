@@ -387,13 +387,13 @@ async function checkConnection() {
     const tokenValid = Boolean(status.tokenValid);
     const statusEl = document.querySelector("#connectionStatus");
     if (!status.configured) {
-      statusEl.textContent = "未完成配置（Phone Number ID / Token / Verify Token 仍有空项）";
+      statusEl.textContent = "未完成配置（字段仍有空项）";
       statusEl.className = "status-bad";
     } else if (!tokenValid) {
-      statusEl.textContent = `字段已填写，但 Graph Token 无效：${status.tokenError || "未知错误"}`;
+      statusEl.textContent = `字段已填写，Graph Token 无效`;
       statusEl.className = "status-bad";
     } else {
-      statusEl.textContent = "已配置，Graph Token 有效，可以接收 Webhook 并发送消息";
+      statusEl.textContent = "已配置，Graph Token 有效";
       statusEl.className = "status-ok";
     }
     const receive = status.receive || {};

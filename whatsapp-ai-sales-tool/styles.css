@@ -325,15 +325,19 @@ textarea:focus, input:focus {
   margin-top: 12px;
 }
 .connection-box {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 8px 12px;
   padding: 11px;
   margin-top: 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #f7faf9;
+}
+#connectionStatus {
+  flex: 1 1 220px;
+  line-height: 1.45;
 }
 .status-ok {
   color: #0a7a3e;
