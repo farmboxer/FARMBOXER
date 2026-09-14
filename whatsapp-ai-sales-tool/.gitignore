@@ -1,0 +1,13 @@
+config.local.json
+config.*.json
+!config.example.json
+data/*
+!data/.gitkeep
+node_modules/
+.env
+.env.*
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z

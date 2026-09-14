@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhatsApp AI 外贸经营工具</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">W</div>
+          <div>
+            <strong>WhatsApp AI</strong>
+            <span>外贸经营系统</span>
+          </div>
+        </div>
+        <nav class="nav">
+          <button class="nav-item active" data-view="workspace"><span data-lucide="messages-square"></span>消息工作台</button>
+          <button class="nav-item" data-view="knowledge"><span data-lucide="book-open"></span>知识库</button>
+          <button class="nav-item" data-view="products"><span data-lucide="package"></span>产品库</button>
+          <button class="nav-item" data-view="market"><span data-lucide="radar"></span>市场调研</button>
+          <button class="nav-item" data-view="customers"><span data-lucide="users"></span>客户分级</button>
+          <button class="nav-item" data-view="reports"><span data-lucide="bar-chart-3"></span>经营报告</button>
+          <button class="nav-item" data-view="settings"><span data-lucide="settings"></span>设置</button>
+        </nav>
+        <div class="goal-card">
+          <span>5年目标</span>
+          <strong>10亿销售额</strong>
+          <small>利润率必须保持 15%+</small>
+          <div class="progress"><i></i></div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <h1>自动经营 WhatsApp 工作台</h1>
+            <p>先审核再发送，持续沉淀客户、产品、市场和竞品知识。</p>
+          </div>
+          <div class="top-actions">
+            <button class="ghost" id="syncWhatsApp"><span data-lucide="refresh-cw"></span>同步 WhatsApp</button>
+            <button class="ghost" id="exportData"><span data-lucide="download"></span>导出数据</button>
+            <label class="primary file-button">
+              <span data-lucide="upload"></span>导入数据
+              <input id="importData" type="file" accept="application/json" />
+            </label>
+          </div>
+        </header>
+
+        <section class="kpi-strip">
+          <div><span>当前年销售额</span><strong>0.15亿</strong></div>
+          <div><span>5年目标</span><strong>10亿</strong></div>
+          <div><span>目标利润率</span><strong>15%+</strong></div>
+          <div><span>高意向客户</span><strong id="hotLeadCount">0</strong></div>
+          <div><span>待人工审核</span><strong id="reviewCount">0</strong></div>
+        </section>
+
+        <section class="view active" id="workspace">
+          <div class="three-column">
+            <section class="panel">
+              <div class="panel-head">
+                <h2>WhatsApp 消息队列</h2>
+                <button class="icon-button" id="addDemoMessage" title="新增示例消息"><span data-lucide="plus"></span></button>
+              </div>
+              <div class="message-list" id="messageList"></div>
+              <textarea id="rawMessage" placeholder="粘贴客户 WhatsApp 消息，例如：客户国家、需求、数量、预算、用途、问题。"></textarea>
+              <button class="primary full" id="addMessage"><span data-lucide="message-circle-plus"></span>加入消息队列</button>
+            </section>
+
+            <section class="panel answer-panel">
+              <div class="panel-head">
+                <h2>AI 建议回复与方案</h2>
+                <span class="status" id="confidenceTag">等待选择客户</span>
+              </div>
+              <div class="selected-context" id="selectedContext"></div>
+              <label>建议回复</label>
+              <textarea id="draftReply"></textarea>
+              <div class="button-row">
+                <button class="primary" id="approveReply"><span data-lucide="check"></span>审核通过</button>
+                <button class="ghost" id="saveKnowledge"><span data-lucide="book-plus"></span>加入知识库</button>
+                <button class="primary" id="sendWhatsApp"><span data-lucide="send"></span>发送到 WhatsApp</button>
+                <button class="ghost" id="markSent"><span data-lucide="send"></span>标记已发送</button>
+              </div>
+              <div class="solution-box" id="solutionBox"></div>
+            </section>
+
+            <section class="panel intelligence-panel">
+              <div class="panel-head">
+                <h2>客户 / 产品 / 市场情报</h2>
+                <button class="icon-button" id="scheduleResearch" title="安排市场调研"><span data-lucide="calendar-plus"></span></button>
+              </div>
+              <div id="intelContent"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="knowledge">
+          <div class="grid-two">
+            <section class="panel">
+              <h2>人工增加知识库</h2>
+              <div class="form-grid">
+                <input id="kbTitle" placeholder="标题：例如 最小起订量如何回答" />
+                <input id="kbTags" placeholder="标签：价格, MOQ, 售后" />
+                <textarea id="kbBody" placeholder="标准答案、注意事项、适用产品、底线条件"></textarea>
+                <button class="primary" id="addKnowledge"><span data-lucide="plus"></span>保存知识</button>
+              </div>
+            </section>
+            <section class="panel">
+              <h2>多格式批量导入</h2>
+              <p class="plain-text">支持 Markdown、CSV、JSON、表格文本和自由文本。适合粘贴产品说明、报价规则、售后政策、竞品资料和客户问答。</p>
+              <div class="form-grid">
+                <textarea id="bulkKnowledge" placeholder="示例：&#10;# Alpha Pro 300&#10;标签：产品, 高温市场&#10;参数：工业级核心件，2年质保&#10;报价：USD 1280，底价：USD 1160，成本：USD 980&#10;话术：适合中东高温市场，强调稳定性和售后。"></textarea>
+                <div class="button-row">
+                  <button class="primary" id="importKnowledge"><span data-lucide="file-input"></span>导入为知识</button>
+                  <button class="ghost" id="importProducts"><span data-lucide="table-properties"></span>导入为产品</button>
+                </div>
+              </div>
+            </section>
+            <section class="panel">
+              <h2>知识条目</h2>
+              <div class="table-list" id="knowledgeList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="products">
+          <div class="grid-two">
+            <section class="panel">
+              <h2>产品信息维护</h2>
+              <div class="form-grid">
+                <input id="productName" placeholder="产品名称" />
+                <input id="productCategory" placeholder="品类" />
+                <input id="productSpecs" placeholder="技术参数 / 配置" />
+                <input id="productPrice" type="number" placeholder="报价 USD" />
+                <input id="productFloor" type="number" placeholder="最低价 USD" />
+                <input id="productCost" type="number" placeholder="成本 USD" />
+                <button class="primary" id="addProduct"><span data-lucide="package-plus"></span>保存产品</button>
+              </div>
+            </section>
+            <section class="panel">
+              <h2>产品库与利润</h2>
+              <div class="table-list" id="productList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="market">
+          <div class="grid-two">
+            <section class="panel">
+              <h2>每日目标市场调研</h2>
+              <div class="form-grid">
+                <input id="marketCountry" placeholder="国家 / 地区" />
+                <input id="marketDemand" placeholder="市场需求与配置偏好" />
+                <input id="marketPrice" placeholder="当地价格区间" />
+                <input id="marketCompetitor" placeholder="竞品 / 竞争对手" />
+                <textarea id="marketNote" placeholder="渠道、风险、机会、建议动作"></textarea>
+                <button class="primary" id="addMarket"><span data-lucide="radar"></span>保存调研</button>
+              </div>
+            </section>
+            <section class="panel">
+              <h2>市场与竞品记录</h2>
+              <div class="table-list" id="marketList"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="customers">
+          <section class="panel">
+            <div class="panel-head">
+              <h2>客户分级</h2>
+              <button class="ghost" id="regradeCustomers"><span data-lucide="sparkles"></span>重新评分</button>
+            </div>
+            <div class="customer-board" id="customerBoard"></div>
+          </section>
+        </section>
+
+        <section class="view" id="reports">
+          <section class="panel report-panel">
+            <div class="panel-head">
+              <h2>3天经营总结</h2>
+              <button class="primary" id="generateReport"><span data-lucide="file-text"></span>生成总结</button>
+            </div>
+            <div id="reportContent"></div>
+          </section>
+        </section>
+
+        <section class="view" id="settings">
+          <div class="grid-two">
+            <section class="panel">
+              <h2>WhatsApp 自动化接入</h2>
+              <div class="connection-box" id="connectionBox">
+                <strong>连接状态：</strong><span id="connectionStatus">未检查</span>
+                <button class="ghost" id="checkConnection"><span data-lucide="plug-zap"></span>检查连接</button>
+              </div>
+              <div class="checklist">
+                <label><input type="checkbox" checked /> 使用 WhatsApp Business Platform 官方 Cloud API</label>
+                <label><input type="checkbox" checked /> 客户首次回复前采用人工审核</label>
+                <label><input type="checkbox" /> 高置信度常见问题自动发送</label>
+                <label><input type="checkbox" checked /> 每日按来源国家生成市场调研任务</label>
+              </div>
+            </section>
+            <section class="panel">
+              <h2>系统边界</h2>
+              <p class="plain-text" id="webhookHelp">当前工具已预留官方 WhatsApp Business Platform Cloud API 和 Webhooks。正式发送和接收消息前，需要在本机 config.local.json 中配置 Phone Number ID、永久 System User Token、Verify Token 和生产环境 App Secret，并把 Callback URL <code>https://wa.chinagardentec.com/webhook</code> 填入 Meta 开发者后台，订阅 <code>messages</code>。「检查连接」会区分字段是否填写与 Graph Token 是否真正有效。</p>
+              <p class="plain-text ops-log" id="receiveDiagnostics">尚未检查接收诊断。点击「检查连接」后可看到 Meta 是否打到本机。</p>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

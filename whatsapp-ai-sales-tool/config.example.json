@@ -1,0 +1,14 @@
+{
+  "port": 8789,
+  "publicBaseUrl": "https://wa.chinagardentec.com",
+  "whatsapp": {
+    "graphApiVersion": "v21.0",
+    "appId": "YOUR_META_APP_ID",
+    "appName": "FARMBOXER",
+    "phoneNumberId": "YOUR_PHONE_NUMBER_ID",
+    "businessAccountId": "YOUR_WHATSAPP_BUSINESS_ACCOUNT_ID",
+    "accessToken": "YOUR_PERMANENT_SYSTEM_USER_ACCESS_TOKEN",
+    "verifyToken": "choose-a-long-random-webhook-verify-token",
+    "appSecret": "REQUIRED_IN_PRODUCTION_META_APP_SECRET"
+  }
+}
