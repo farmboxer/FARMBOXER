@@ -540,7 +540,9 @@ function Bubble({ msg }: { msg: ChatMessage }) {
       <div
         className={cn(
           "max-w-[min(78%,36rem)] px-2.5 pb-1.5 pt-1.5 text-[14.5px] leading-relaxed shadow-sm",
-          inbound ? "wa-bubble-in bg-white text-[#111b21]" : "wa-bubble-out bg-[#d9fdd3] text-[#111b21]",
+          inbound
+            ? "wa-bubble-in bg-white text-[#111b21] shadow-[0_1px_1px_rgba(0,0,0,0.08)]"
+            : "wa-bubble-out bg-[#d9fdd3] text-[#111b21] shadow-[0_1px_1px_rgba(0,0,0,0.06)]",
         )}
       >
         <p className="whitespace-pre-wrap">{msg.body}</p>

@@ -22,11 +22,11 @@ body {
 }
 
 .wa-wallpaper {
-  background-color: #efeae2;
+  background-color: #e5ddd5;
   background-image:
-    radial-gradient(circle at 12px 8px, rgba(16, 42, 27, 0.045) 1.2px, transparent 1.4px),
-    radial-gradient(circle at 28px 22px, rgba(16, 42, 27, 0.03) 1px, transparent 1.2px);
-  background-size: 36px 28px;
+    radial-gradient(circle at 10px 6px, rgba(80, 60, 40, 0.07) 1.4px, transparent 1.6px),
+    radial-gradient(circle at 26px 20px, rgba(80, 60, 40, 0.05) 1px, transparent 1.2px);
+  background-size: 34px 26px;
 }
 
 .wa-bubble-in {
