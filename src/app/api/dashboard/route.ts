@@ -46,7 +46,7 @@ export async function GET() {
       text: `${weak.length} 个 SKU 目录价毛利低于 ${settings.marginFloorPercent}%：${weak.map((p) => p.sku).join("、")}`,
     });
   }
-  if (pending) alerts.push({ level: "warn", text: `${pending} 条 WhatsApp 草稿待人工批准` });
+  if (pending) alerts.push({ level: "warn", text: `${pending} 条聊天草稿待在会话中批准发送` });
   if (findings) alerts.push({ level: "warn", text: `${findings} 条市场情报待批准入库` });
   if (sampleProducts) {
     alerts.push({ level: "info", text: `${sampleProducts} 条产品仍为样本目录` });

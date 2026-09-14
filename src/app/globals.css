@@ -20,3 +20,19 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.wa-wallpaper {
+  background-color: #efeae2;
+  background-image:
+    radial-gradient(circle at 12px 8px, rgba(16, 42, 27, 0.045) 1.2px, transparent 1.4px),
+    radial-gradient(circle at 28px 22px, rgba(16, 42, 27, 0.03) 1px, transparent 1.2px);
+  background-size: 36px 28px;
+}
+
+.wa-bubble-in {
+  border-radius: 0 10px 10px 10px;
+}
+
+.wa-bubble-out {
+  border-radius: 10px 0 10px 10px;
+}

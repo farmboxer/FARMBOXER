@@ -2,7 +2,7 @@
 
 import {
   BookOpen,
-  Inbox,
+  MessageCircle,
   LayoutDashboard,
   Menu,
   Newspaper,
@@ -20,7 +20,7 @@ const NAV = [
   { href: "/", label: "经营看板", icon: LayoutDashboard },
   { href: "/knowledge", label: "知识库", icon: BookOpen },
   { href: "/products", label: "产品与方案", icon: Package },
-  { href: "/inbox", label: "WhatsApp 收件箱", icon: Inbox },
+  { href: "/inbox", label: "聊天", icon: MessageCircle },
   { href: "/market", label: "市场情报", icon: Newspaper },
   { href: "/reviews", label: "三日复盘", icon: ScrollText },
   { href: "/settings", label: "系统设置", icon: Settings },
@@ -29,9 +29,10 @@ const NAV = [
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const isChat = pathname.startsWith("/inbox");
 
   return (
-    <div className="min-h-screen bg-[#f4f0e6] text-stone-900">
+    <div className={cn("bg-[#f4f0e6] text-stone-900", isChat ? "h-dvh overflow-hidden" : "min-h-screen")}>
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-emerald-900/10 bg-[#1d3b24] px-4 py-3 text-emerald-50 lg:hidden">
         <div>
           <p className="text-sm font-semibold">FarmBoxer 经营中台</p>
@@ -59,7 +60,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
       ) : null}
-      <div className="mx-auto flex min-h-screen max-w-[1400px]">
+      <div className={cn("mx-auto flex", isChat ? "h-full max-w-none" : "min-h-screen max-w-[1400px]")}>
         <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col bg-[#1d3b24] px-4 py-6 text-emerald-50 lg:flex">
           <div className="mb-8 px-2">
             <p className="text-lg font-semibold leading-tight">FarmBoxer</p>
@@ -87,7 +88,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             毛利底线 ≥15%。看板不编造真实业绩。
           </p>
         </aside>
-        <main className="min-w-0 flex-1 p-4 sm:p-6">{children}</main>
+        <main
+          className={cn(
+            "min-w-0 flex-1",
+            isChat ? "flex h-[calc(100dvh-57px)] flex-col overflow-hidden lg:h-screen" : "p-4 sm:p-6",
+          )}
+        >
+          {children}
+        </main>
       </div>
     </div>
   );
